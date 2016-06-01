@@ -37,12 +37,13 @@ if __name__ == '__main__':
             if(r.status_code == 200):
                 records = json.loads(r.text)
                 for record in records:
-                    try:
-                        c.execute("INSERT INTO records (id) VALUES (" + record['record_id'] + ")")
-                        conn.commit()
-                        sender.send_msg('@hot_news_fa',record['title'] + '\n\n' + record['subtitle'] + '\n\n' + 'https://telegram.me/hot_news_fa')
-                    except sqlite3.IntegrityError:
-                        pass
+                    if record['hits'] > 200:
+                        try:
+                            c.execute("INSERT INTO records (id) VALUES (" + record['record_id'] + ")")
+                            conn.commit()
+                            sender.send_msg('@hot_news_fa',record['title'] + '\n\n' + record['subtitle'] + '\n\n' + 'https://telegram.me/hot_news_fa')
+                        except sqlite3.IntegrityError:
+                            pass
         except Exception:
             pass
 
