@@ -41,7 +41,7 @@ if __name__ == '__main__':
                         try:
                             c.execute("INSERT INTO records (id) VALUES (" + record['record_id'] + ")")
                             conn.commit()
-                            sender.send_msg('@hot_news_fa',record['title'] + '\n\n' + record['subtitle'] + '\n\n' + 'https://telegram.me/hot_news_fa')
+                            sender.send_msg('@hot_news_fa',record['title'] + '\n\n' + record['subtitle'] + '\n\n' + 'https://telegram.me/joinchat/BVzZhT8QRD7mxs7mr8_0vA')
                         except sqlite3.IntegrityError:
                             pass
         except Exception:
