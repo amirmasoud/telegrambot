@@ -37,7 +37,6 @@ if __name__ == '__main__':
             if(r.status_code == 200):
                 records = json.loads(r.text)
                 for record in reversed(records):
-                    if int(record['hits']) > 200:
                         try:
                             c.execute("INSERT INTO records (id) VALUES (" + record['record_id'] + ")")
                             conn.commit()
@@ -49,8 +48,8 @@ if __name__ == '__main__':
             print e
             pass
 
-        time.sleep(600)
-        conn.close()
+        time.sleep(120)
+    conn.close()
         
     # receiver.start()
     # receiver.message(receive_listener(receiver))
