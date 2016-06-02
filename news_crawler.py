@@ -36,18 +36,20 @@ if __name__ == '__main__':
             r = session.get("http://app.bartarinha.ir/fa/webservice/json/news/service/20/1")
             if(r.status_code == 200):
                 records = json.loads(r.text)
-                for record in records:
-                    if record['hits'] > 200:
+                for record in reversed(records):
+                    if int(record['hits']) > 200:
                         try:
                             c.execute("INSERT INTO records (id) VALUES (" + record['record_id'] + ")")
                             conn.commit()
-                            sender.send_msg('@hot_news_fa',record['title'] + '\n\n' + record['subtitle'] + '\n\n' + 'https://telegram.me/joinchat/BVzZhT8QRD7mxs7mr8_0vA')
+                            sender.send_msg(u'\u0627\u062e\u0628\u0627\u0631_\u062f\u0627\u063a',u"%s\n\n%s\n\nhttps://telegram.me/joinchat/BVzZhT8QRD7mxs7mr8_0vA" % (record['title'],record['subtitle']))
+                            time.sleep(1)
                         except sqlite3.IntegrityError:
                             pass
-        except Exception:
+        except Exception as e:
+            print e
             pass
 
-        time.sleep(120)
+        time.sleep(600)
         conn.close()
         
     # receiver.start()
